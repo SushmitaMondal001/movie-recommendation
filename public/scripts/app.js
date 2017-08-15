@@ -20,45 +20,29 @@ app.config(function ($stateProvider,$urlRouterProvider){
 });
 */
 
-app.controller('viewEditController',function($http) {
+app.controller('viewEditController',function($http, $scope) {
   var vm = this;
   vm.isEditing = false;
   vm.change = {};
 
-  vm.save = function () {
-    console.log('function postData is invoked');
+  $scope.submitForm = function (isValid) {
+    if(isValid){
+        console.log('function postData is invoked');
+        console.log('started to post data');
+        console.log('data is ' + vm.change.title);
 
-    //console.log('after save, scope.title is' + );
+        $http.post('/recommendation',vm.change).then(function (response) {
+            vm.movie = Object.assign({}, vm.change);
+            console.log('response status: ' + response.status);
+            console.log('status text: ' + response.statusText);
+        });
 
-    // var data = {
-    //   title: $scope.title,
-    //   date: $scope.date,
-    //   duration: $scope.duration,
-    //   genre: $scope.genre,
-    //   synopsis: $scope.synopsis
-    // };
+        vm.movie = Object.assign({}, vm.change);
+        vm.isEditing = false;
+    }
+    else
+      alert("Invalid input");
 
-   // temp until we can get this working on the server
-  //
-  //  $scope.title = data.title;
-  //  $scope.date = data.date;
-  //  $scope.duration = data.duration;
-  //  $scope.genre = data.genre;
-  //  $scope.synopsis = data.synopsis;
-
-
-
-    console.log('started to post data');
-    console.log('data is ' + vm.change.title);
-
-    $http.post('/recommendation',vm.change).then(function (response) {
-      vm.movie = Object.assign({}, vm.change);
-      console.log('response status: ' + response.status);
-      console.log('status text: ' + response.statusText);
-    });
-
-    vm.movie = Object.assign({}, vm.change);
-    vm.isEditing = false;
   };
 
   vm.edit = function () {

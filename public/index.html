@@ -43,30 +43,31 @@
 </div>
 
 <div ng-if="vm.isEditing">
-	<form>
+	<form name="myForm" ng-submit="submitForm(userForm.$valid)">
 	  <div class='form-group'>
 	    <label for="title">Title</label>
-	    <input type="text" class="form-control" id="title" ng-model="vm.change.title">
+	    <input type="text" class="form-control" id="title" ng-model="vm.change.title" ng-minlength="4" ng-maxlength="25" required>
+		  <span ng-show="myForm.title.$touched && myForm.myName.$invalid">The name is required.</span>
 			<h2>{{vm.movie.title}}</h2>
 	  </div>
 	  <div class='form-group'>
 	    <label for="date">Release date</label>
-	    <input type="text" class="form-control" id="date" ng-model="vm.change.date">
+	    <input type="text" class="form-control" id="date" ng-model="vm.change.date" required>
 	  </div>
 	  <div class='form-group'>
 	    <label for="duration">Duration</label>
-	    <input type="text" class="form-control" id="duration" ng-model="vm.change.duration">
+	    <input type="text" class="form-control" id="duration" ng-model="vm.change.duration" required>
 	  </div>
 	  <div class='form-group'>
 	    <label for="genre">Genre</label>
-	    <input type="text" class="form-control" id="genre" ng-model="vm.change.genre">
+	    <input type="text" class="form-control" id="genre" ng-model="vm.change.genre" required>
 	  </div>
 	  <div class='form-group'>
 	    <label for="synopsis">Synopsis</label>
 	    <input type="text" class="form-control" id="synopsis" ng-model="vm.change.synopsis">
 	  </div>
 
-	  <input ng-click="vm.save()" class="btn btn-info" value="SAVE">
+		<button type="submit"  class="btn btn-info">Save</button>
 	  <input ng-click="vm.cancel()" class="btn btn-info" value="CANCEL">
 	</form>
 
